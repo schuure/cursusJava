@@ -1,0 +1,12 @@
+
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ÏÃİ8ü©ßÇ§.
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¯—ÌÕ8øè’ş¥.
+X	java:S125"<This block of commented-out lines of code should be removed.(ïÉ»Û8ß”æÇ§.
+U	java:S106
+"9Replace this use of System.out or System.err by a logger.(¬¶Û¿8ü©ßÇ§.
+e
+java:S2259"CA "NullPointerException" could be thrown; "main2" is nullable here.(€×…¯øÿÿÿÿ8ùºåÇ§.
+R
+java:S2209"5Change this instance-reference to a static reference.(Šœè’8˜äÇ§.
+W
+java:S2209"5Change this instance-reference to a static reference.(€×…¯øÿÿÿÿ8ùºåÇ§.
