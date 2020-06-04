@@ -6,21 +6,38 @@ import java.util.Scanner;
 public class Bank {
 
     double balans = 100.0;
-    int count= 0;
+    int count = 0;
     boolean pasgeblokkeerd = false;
+    Scanner scanner = new Scanner(System.in);
+    Mens klant = new Mens(10);
 
     public static void main(String[] args) {
         System.out.println("Welkom bij de bank");
-        Mens klant = new Mens(10);
         Bank abn = new Bank();
-        abn.geldOpnemen(klant);
+        abn.vraagStellen();
         System.out.println("de bank is gesloten");
     }
 
+    void vraagStellen() {
+
+        if (!pasgeblokkeerd) {
+            System.out.println("Wat wilt u doen? opnemen of storten?");
+            String invoer = scanner.next();
+
+            if (invoer.equals("opnemen")) {
+                geldOpnemen(klant);
+            } else if (invoer.equals("storten")) {
+                storten(klant);
+            } else {
+                System.out.println("dit is een onjuiste keuze");
+                vraagStellen();
+            }
+        }
+    }
+
     void geldOpnemen(Mens klant) {
-        if (controleerBalans() &&  !pasgeblokkeerd ) {
+        if (controleerBalans() && !pasgeblokkeerd) {
             System.out.println("U wilt geld opnemen. Wat is uw pincode?");
-            Scanner scanner = new Scanner(System.in);
             int pincode = scanner.nextInt();
 
             if (controleerPincode(pincode)) {
@@ -28,15 +45,35 @@ public class Bank {
                 double opname = scanner.nextDouble();
                 if (this.balans - opname > 0) {
                     this.balans -= opname;
-                    System.out.println(balans);
+                    String balansText = String.format("%.2f", balans);
+                    System.out.println("De bank heeft nog :" + balansText);
                     klant.portomonnee += opname;
-                    geldOpnemen(klant);
+                    String portomonneeText= String.format("%.2f", klant.portomonnee);
+                    System.out.println("Uw portomonnee bevat nu " + portomonneeText);
+                    vraagStellen();
                 } else {
                     System.out.println("de bank is failliet en u kunt weer naar huis");
-                    pasgeblokkeerd=true;
+                    pasgeblokkeerd = true;
                 }
-            } geldOpnemen(klant);
+            }
+            vraagStellen();
         }
+    }
+
+    void storten(Mens klant) {
+        System.out.println("Hoeveel geld wilt u storten?");
+        double storting = scanner.nextDouble();
+        if (klant.portomonnee - storting >= 0) {
+            this.balans += storting;
+            String balansText = String.format("%.2f", balans);
+            System.out.println("De bank heeft nu: " + balansText);
+            klant.portomonnee -= storting;
+            String portomonneeText = String.format("%.2f", klant.portomonnee);
+            System.out.println("Uw portomonnee bevat nu " + portomonneeText);
+        } else {
+            System.out.println("U heeft maar " + klant.portomonnee + " in uw portomonnee, de storting gaat niet door");
+        }
+        vraagStellen();
     }
 
     boolean controleerPincode(int code) {
